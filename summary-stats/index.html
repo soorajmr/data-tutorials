@@ -11,8 +11,8 @@
     <header class="header">
         <div class="container">
             <div class="header__content">
-                <h1 class="header__title">📊 Statistics Made Simple</h1>
-                <p class="header__subtitle">Master Statistical Concepts Through Real-World Examples</p>
+                <h1 class="header__title">Simple Summaries of Numerical Data</h1>
+                <p class="header__subtitle">Learn Summary Statistics Through Examples</p>
                 <nav class="header__nav">
                     <a href="#introduction" class="nav-link">Introduction</a>
                     <a href="#mean" class="nav-link">Mean</a>
@@ -29,8 +29,7 @@
     <section id="introduction" class="section">
         <div class="container">
             <div class="intro-content">
-                <h2>Learn Statistics Through Practical Examples</h2>
-                <p>This tutorial will teach you essential statistical concepts through real-world examples and interactive exercises. You'll learn how to calculate, interpret, and apply mean, median, mode, standard deviation, and quantiles to make data-driven decisions in everyday situations.</p>
+                <p>This tutorial will teach you essential statistical summaries through examples and interactive exercises. You'll learn how to calculate, interpret, and apply mean, median, mode, standard deviation, and quantiles.</p>
             </div>
         </div>
     </section>
@@ -38,31 +37,50 @@
     <!-- Mean Section -->
     <section id="mean" class="section">
         <div class="container">
-            <h2>Mean (Average)</h2>
+            <h2>Mean (Mathematical Average)</h2>
             <div class="concept-explanation">
                 <h3>What is Mean?</h3>
-                <p>The average value - add all numbers and divide by count. Used for planning and resource allocation - tells you what to expect on a typical day.</p>
-                <p><strong>When to use:</strong> When you need to plan resources or set expectations based on typical values.</p>
+                <p>Often called the average - add all numbers and divide by count. Useful for planning total resources needed and calculating overall capacity requirements.</p>
+                <p><strong>When to use:</strong> When you need to calculate totals, plan capacity, or distribute resources.</p>
+                <p><strong>Important note:</strong> Can be misleading when there are extreme values - median may be a better alternative in those situations.</p>
             </div>
 
             <div class="example-section">
                 <h3>Example: Daily Water Consumption Planning</h3>
-                <p>Daily water consumption (liters) per household in a residential area over 10 days:</p>
+                <p>Daily water consumption (liters) per household across one week (Monday to Sunday):</p>
                 <div class="data-display">
-                    <span class="data-label">180L</span>
-                    <span class="data-label">220L</span>
-                    <span class="data-label">195L</span>
-                    <span class="data-label">210L</span>
-                    <span class="data-label">185L</span>
-                    <span class="data-label">200L</span>
-                    <span class="data-label">175L</span>
-                    <span class="data-label">225L</span>
-                    <span class="data-label">190L</span>
-                    <span class="data-label">205L</span>
+                    <div class="data-day">
+                        <span class="day-label">Mon</span>
+                        <span class="data-label">185L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Tue</span>
+                        <span class="data-label">210L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Wed</span>
+                        <span class="data-label">195L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Thu</span>
+                        <span class="data-label">200L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Fri</span>
+                        <span class="data-label">180L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Sat</span>
+                        <span class="data-label">240L</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Sun</span>
+                        <span class="data-label">220L</span>
+                    </div>
                 </div>
                 <div class="calculation">
-                    <p><strong>Average consumption:</strong> <span id="mean-result">198.5</span> liters per day</p>
-                    <p><em>Municipal planners use this average to determine pipeline capacity and daily supply requirements for the entire area.</em></p>
+                    <p><strong>Average consumption:</strong> <span id="mean-result">204.3</span> liters per day</p>
+                    <p><em>Municipal planning for water supply infrastructure - helps calculate total weekly demand (1,430L) and required supply capacity (204L × number of households daily).</em></p>
                 </div>
             </div>
 
@@ -124,7 +142,7 @@
                 </div>
                 <div class="calculation">
                     <p><strong>Median income:</strong> <span id="income-median-result">₹41k</span> (middle value between 10th and 11th positions)</p>
-                    <p><em>This shows what a typical middle-class family actually earns, not skewed by very high earners.</em></p>
+                    <p><em>Understanding typical income levels for policy planning - median shows what a 'middle-class' family actually earns.</em></p>
                 </div>
 
                 <h3>Example 2: PDS Shop Waiting Times</h3>
@@ -153,7 +171,7 @@
                 </div>
                 <div class="calculation">
                     <p><strong>Median waiting time:</strong> <span id="pds-median-result">31 minutes</span></p>
-                    <p><em>Gives realistic expectation for service improvement planning, not skewed by extremely long waits.</em></p>
+                    <p><em>Service improvement planning - median waiting time gives realistic expectation, not skewed by extremely long waits.</em></p>
                 </div>
             </div>
 
@@ -189,8 +207,8 @@
             </div>
 
             <div class="example-section">
-                <h3>Example: Preferred Transport Mode</h3>
-                <p>Transport preferences among office commuters:</p>
+                <h3>Example: Preferred Transport Option</h3>
+                <p>Transport preferences among commuters:</p>
                 <div class="data-display">
                     <span class="data-label highlighted">Bus</span>
                     <span class="data-label highlighted">Bus</span>
@@ -206,8 +224,8 @@
                     <span class="data-label highlighted">Bus</span>
                 </div>
                 <div class="calculation">
-                    <p><strong>Mode:</strong> <span id="mode-result">Bus</span> (appears 7 times - most popular transport mode)</p>
-                    <p><em>Transport planners use this to prioritize investment - most popular mode needs maximum capacity.</em></p>
+                    <p><strong>Mode:</strong> <span id="mode-result">Bus</span> (appears 7 times - most popular transport choice)</p>
+                   
                 </div>
             </div>
 
@@ -244,24 +262,42 @@
 
             <div class="example-section">
                 <h3>Example: Air Quality Risk Assessment</h3>
-                <p>Daily Air Quality Index readings over 10 days in a city:</p>
+                <p>Daily Air Quality Index readings across one week (Monday to Sunday):</p>
                 <div class="data-display">
-                    <span class="data-label">45 AQI</span>
-                    <span class="data-label">65 AQI</span>
-                    <span class="data-label">85 AQI</span>
-                    <span class="data-label">95 AQI</span>
-                    <span class="data-label">120 AQI</span>
-                    <span class="data-label">150 AQI</span>
-                    <span class="data-label">180 AQI</span>
-                    <span class="data-label">200 AQI</span>
-                    <span class="data-label">250 AQI</span>
-                    <span class="data-label">300 AQI</span>
+                    <div class="data-day">
+                        <span class="day-label">Mon</span>
+                        <span class="data-label">65 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Tue</span>
+                        <span class="data-label">85 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Wed</span>
+                        <span class="data-label">120 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Thu</span>
+                        <span class="data-label">95 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Fri</span>
+                        <span class="data-label">110 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Sat</span>
+                        <span class="data-label">75 AQI</span>
+                    </div>
+                    <div class="data-day">
+                        <span class="day-label">Sun</span>
+                        <span class="data-label">80 AQI</span>
+                    </div>
                 </div>
                 <div class="calculation">
-                    <p><strong>Mean AQI:</strong> <span id="stddev-mean">149</span></p>
-                    <p><strong>Standard Deviation:</strong> <span id="stddev-result">83.4</span></p>
-                    <p><strong>Why this matters:</strong> High standard deviation shows highly variable air quality, meaning unpredictable health risks requiring flexible response plans rather than fixed policies.</p>
-                    <p><em>Low SD = consistent air quality (easier to plan), High SD = highly variable (needs adaptive strategies)</em></p>
+                    <p><strong>Mean AQI:</strong> <span id="stddev-mean">90.0</span></p>
+                    <p><strong>Standard Deviation:</strong> <span id="stddev-result">19.2</span></p>
+                    <p><strong>Why this matters:</strong> Standard deviation shows consistency of air quality across the week - high variation means unpredictable health risks requiring different policy interventions.</p>
+                    <p><em>Low SD = consistent air quality (easier to plan), High SD = highly variable air quality (needs flexible response plans)</em></p>
                 </div>
             </div>
 
@@ -292,7 +328,7 @@
             <h2>Quantiles (Quartiles & Percentiles)</h2>
             <div class="concept-explanation">
                 <h3>What are Quantiles?</h3>
-                <p>Values that divide data into equal groups. Help understand distribution and set benchmarks - like grade boundaries or income brackets.</p>
+                <p>Values that divide data into equal groups (like quartiles = 4 equal parts). Help understand distribution and set benchmarks - like grade boundaries or income brackets.</p>
                 <p><strong>When to use:</strong> When you need to compare performance or set different service levels for different groups.</p>
             </div>
 

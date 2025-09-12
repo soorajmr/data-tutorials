@@ -22,83 +22,108 @@ function parseInput(inputString) {
     return numbers;
 }
 
-// Mean Calculator
+// Mean Calculator with improved output
 function calculateMean() {
-    const input = document.getElementById('mean-input').value;
+    const input = document.getElementById('mean-input');
     const output = document.getElementById('mean-output');
     
-    if (!output) {
-        console.error('Mean output element not found');
+    if (!input || !output) {
+        console.error('Mean input or output element not found');
         return;
     }
     
     try {
-        const numbers = parseInput(input);
+        const numbers = parseInput(input.value);
         const sum = numbers.reduce((acc, num) => acc + num, 0);
         const mean = sum / numbers.length;
         
         output.innerHTML = `
-            <strong>Numbers:</strong> ${numbers.join(', ')}<br>
-            <strong>Sum:</strong> ${sum.toFixed(2)}<br>
-            <strong>Count:</strong> ${numbers.length}<br>
-            <strong>Mean:</strong> ${mean.toFixed(2)}
+            <div class="result-section">
+                <div class="result-header">Input Data</div>
+                <div class="result-details">Numbers: ${numbers.join(', ')}</div>
+                <div class="result-details">Count: ${numbers.length} values</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Calculation</div>
+                <div class="result-details">Sum: ${sum.toFixed(2)}</div>
+                <div class="result-details">Formula: Sum ÷ Count = ${sum.toFixed(2)} ÷ ${numbers.length}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Result</div>
+                <div class="result-value">${mean.toFixed(2)}</div>
+                <div class="result-interpretation">The mathematical average of your data set</div>
+            </div>
         `;
         output.className = 'result-output success';
     } catch (error) {
-        output.innerHTML = error.message;
+        output.innerHTML = `<div class="result-section"><div class="result-header">Error</div><div class="result-details">${error.message}</div></div>`;
         output.className = 'result-output error';
     }
 }
 
-// Median Calculator
+// Median Calculator with improved output
 function calculateMedian() {
-    const input = document.getElementById('median-input').value;
+    const input = document.getElementById('median-input');
     const output = document.getElementById('median-output');
     
-    if (!output) {
-        console.error('Median output element not found');
+    if (!input || !output) {
+        console.error('Median input or output element not found');
         return;
     }
     
     try {
-        const numbers = parseInput(input);
+        const numbers = parseInput(input.value);
         const sorted = [...numbers].sort((a, b) => a - b);
         const n = sorted.length;
         let median;
         
         if (n % 2 === 0) {
-            // Even number of elements
             median = (sorted[n/2 - 1] + sorted[n/2]) / 2;
         } else {
-            // Odd number of elements
             median = sorted[Math.floor(n/2)];
         }
         
         output.innerHTML = `
-            <strong>Original:</strong> ${numbers.join(', ')}<br>
-            <strong>Sorted:</strong> ${sorted.join(', ')}<br>
-            <strong>Median:</strong> ${median.toFixed(2)}
-            ${n % 2 === 0 ? `<br><em>(Average of ${sorted[n/2 - 1]} and ${sorted[n/2]})</em>` : `<br><em>(Middle value at position ${Math.floor(n/2) + 1})</em>`}
+            <div class="result-section">
+                <div class="result-header">Input Data</div>
+                <div class="result-details">Original: ${numbers.join(', ')}</div>
+                <div class="result-details">Sorted: ${sorted.join(', ')}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Calculation</div>
+                <div class="result-details">Total values: ${n}</div>
+                <div class="result-details">
+                    ${n % 2 === 0 
+                        ? `Even count: Average of positions ${n/2} and ${n/2 + 1}<br>Middle values: ${sorted[n/2 - 1]} and ${sorted[n/2]}`
+                        : `Odd count: Middle position ${Math.floor(n/2) + 1}<br>Middle value: ${sorted[Math.floor(n/2)]}`
+                    }
+                </div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Result</div>
+                <div class="result-value">${median.toFixed(2)}</div>
+                <div class="result-interpretation">The middle value that represents what's typical</div>
+            </div>
         `;
         output.className = 'result-output success';
     } catch (error) {
-        output.innerHTML = error.message;
+        output.innerHTML = `<div class="result-section"><div class="result-header">Error</div><div class="result-details">${error.message}</div></div>`;
         output.className = 'result-output error';
     }
 }
 
-// Mode Calculator
+// Mode Calculator with clean frequency table
 function calculateMode() {
-    const input = document.getElementById('mode-input').value;
+    const input = document.getElementById('mode-input');
     const output = document.getElementById('mode-output');
     
-    if (!output) {
-        console.error('Mode output element not found');
+    if (!input || !output) {
+        console.error('Mode input or output element not found');
         return;
     }
     
     try {
-        const numbers = parseInput(input);
+        const numbers = parseInput(input.value);
         const frequency = {};
         
         // Count frequencies
@@ -114,41 +139,68 @@ function calculateMode() {
             .filter(num => frequency[num] === maxFreq)
             .map(num => parseFloat(num));
         
-        let result = `<strong>Numbers:</strong> ${numbers.join(', ')}<br>`;
-        result += `<strong>Frequencies:</strong><br>`;
+        // Create frequency table HTML
+        const frequencyTableHTML = `
+            <div class="frequency-table">
+                <div class="frequency-header">Value</div>
+                <div class="frequency-header">Frequency</div>
+                ${Object.keys(frequency).map(num => `
+                    <div class="frequency-item">
+                        <div class="frequency-value">${num}</div>
+                        <div class="frequency-count">${frequency[num]} time${frequency[num] > 1 ? 's' : ''}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
         
-        Object.keys(frequency).forEach(num => {
-            result += `${num}: ${frequency[num]} time${frequency[num] > 1 ? 's' : ''}<br>`;
-        });
+        let modeResult = '';
+        let interpretation = '';
         
-        if (modes.length === numbers.length) {
-            result += `<strong>Mode:</strong> No mode (all values appear equally)`;
+        if (modes.length === Object.keys(frequency).length) {
+            modeResult = 'No mode';
+            interpretation = 'All values appear equally - no single most frequent value';
         } else if (modes.length > 1) {
-            result += `<strong>Modes:</strong> ${modes.join(', ')} (each appears ${maxFreq} times)`;
+            modeResult = modes.join(', ');
+            interpretation = `Multiple modes: each appears ${maxFreq} times`;
         } else {
-            result += `<strong>Mode:</strong> ${modes[0]} (appears ${maxFreq} times)`;
+            modeResult = modes[0].toString();
+            interpretation = `Most frequent value, appears ${maxFreq} times`;
         }
         
-        output.innerHTML = result;
+        output.innerHTML = `
+            <div class="result-section">
+                <div class="result-header">Input Data</div>
+                <div class="result-details">Numbers: ${numbers.join(', ')}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Frequency Analysis</div>
+                ${frequencyTableHTML}
+            </div>
+            <div class="result-section">
+                <div class="result-header">Result</div>
+                <div class="result-value">${modeResult}</div>
+                <div class="result-interpretation">${interpretation}</div>
+            </div>
+        `;
         output.className = 'result-output success';
     } catch (error) {
-        output.innerHTML = error.message;
+        output.innerHTML = `<div class="result-section"><div class="result-header">Error</div><div class="result-details">${error.message}</div></div>`;
         output.className = 'result-output error';
     }
 }
 
-// Standard Deviation Calculator
+// Standard Deviation Calculator with improved output
 function calculateStdDev() {
-    const input = document.getElementById('stddev-input').value;
+    const input = document.getElementById('stddev-input');
     const output = document.getElementById('stddev-output');
     
-    if (!output) {
-        console.error('Standard deviation output element not found');
+    if (!input || !output) {
+        console.error('Standard deviation input or output element not found');
         return;
     }
     
     try {
-        const numbers = parseInput(input);
+        const numbers = parseInput(input.value);
         const n = numbers.length;
         
         // Calculate mean
@@ -161,34 +213,54 @@ function calculateStdDev() {
         // Calculate standard deviation
         const stdDev = Math.sqrt(variance);
         
+        // Interpretation
+        let interpretation = '';
+        const cv = stdDev / Math.abs(mean); // Coefficient of variation
+        if (cv < 0.1) {
+            interpretation = 'Low variation - values are very close together and consistent';
+        } else if (cv < 0.3) {
+            interpretation = 'Moderate variation - some spread but reasonably consistent';
+        } else {
+            interpretation = 'High variation - values are spread out and inconsistent';
+        }
+        
         output.innerHTML = `
-            <strong>Numbers:</strong> ${numbers.join(', ')}<br>
-            <strong>Mean:</strong> ${mean.toFixed(2)}<br>
-            <strong>Variance:</strong> ${variance.toFixed(2)}<br>
-            <strong>Standard Deviation:</strong> ${stdDev.toFixed(2)}<br>
-            <em>${stdDev < mean * 0.1 ? 'Low variation (values are close together)' : 
-                stdDev < mean * 0.3 ? 'Moderate variation' : 
-                'High variation (values are spread out)'}</em>
+            <div class="result-section">
+                <div class="result-header">Input Data</div>
+                <div class="result-details">Numbers: ${numbers.join(', ')}</div>
+                <div class="result-details">Count: ${n} values</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Calculations</div>
+                <div class="result-details">Mean: ${mean.toFixed(2)}</div>
+                <div class="result-details">Variance: ${variance.toFixed(2)}</div>
+                <div class="result-details">Standard Deviation: √${variance.toFixed(2)} = ${stdDev.toFixed(2)}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Result</div>
+                <div class="result-value">${stdDev.toFixed(2)}</div>
+                <div class="result-interpretation">${interpretation}</div>
+            </div>
         `;
         output.className = 'result-output success';
     } catch (error) {
-        output.innerHTML = error.message;
+        output.innerHTML = `<div class="result-section"><div class="result-header">Error</div><div class="result-details">${error.message}</div></div>`;
         output.className = 'result-output error';
     }
 }
 
-// Quantiles Calculator
+// Quantiles Calculator with improved output
 function calculateQuantiles() {
-    const input = document.getElementById('quantiles-input').value;
+    const input = document.getElementById('quantiles-input');
     const output = document.getElementById('quantiles-output');
     
-    if (!output) {
-        console.error('Quantiles output element not found');
+    if (!input || !output) {
+        console.error('Quantiles input or output element not found');
         return;
     }
     
     try {
-        const numbers = parseInput(input);
+        const numbers = parseInput(input.value);
         
         if (numbers.length < 4) {
             throw new Error('Please enter at least 4 numbers for quartile calculations');
@@ -196,7 +268,7 @@ function calculateQuantiles() {
         
         const sorted = [...numbers].sort((a, b) => a - b);
         
-        // Calculate quartiles using the method from the existing code
+        // Calculate quartiles using interpolation method
         function getQuantile(data, q) {
             const pos = (data.length - 1) * q;
             const base = Math.floor(pos);
@@ -212,19 +284,33 @@ function calculateQuantiles() {
         const q1 = getQuantile(sorted, 0.25);
         const q2 = getQuantile(sorted, 0.5); // Median
         const q3 = getQuantile(sorted, 0.75);
+        const iqr = q3 - q1;
         
         output.innerHTML = `
-            <strong>Numbers:</strong> ${numbers.join(', ')}<br>
-            <strong>Sorted:</strong> ${sorted.join(', ')}<br>
-            <strong>Q1 (25th percentile):</strong> ${q1.toFixed(2)}<br>
-            <strong>Q2 (50th percentile - Median):</strong> ${q2.toFixed(2)}<br>
-            <strong>Q3 (75th percentile):</strong> ${q3.toFixed(2)}<br>
-            <strong>Interquartile Range (IQR):</strong> ${(q3 - q1).toFixed(2)}<br>
-            <em>25% of values are below ${q1.toFixed(2)}, 50% below ${q2.toFixed(2)}, 75% below ${q3.toFixed(2)}</em>
+            <div class="result-section">
+                <div class="result-header">Input Data</div>
+                <div class="result-details">Original: ${numbers.join(', ')}</div>
+                <div class="result-details">Sorted: ${sorted.join(', ')}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Quartile Values</div>
+                <div class="result-details">Q1 (25th percentile): ${q1.toFixed(2)}</div>
+                <div class="result-details">Q2 (50th percentile - Median): ${q2.toFixed(2)}</div>
+                <div class="result-details">Q3 (75th percentile): ${q3.toFixed(2)}</div>
+            </div>
+            <div class="result-section">
+                <div class="result-header">Summary Statistics</div>
+                <div class="result-value">IQR: ${iqr.toFixed(2)}</div>
+                <div class="result-interpretation">
+                    25% of values are below ${q1.toFixed(2)}<br>
+                    50% of values are below ${q2.toFixed(2)}<br>
+                    75% of values are below ${q3.toFixed(2)}
+                </div>
+            </div>
         `;
         output.className = 'result-output success';
     } catch (error) {
-        output.innerHTML = error.message;
+        output.innerHTML = `<div class="result-section"><div class="result-header">Error</div><div class="result-details">${error.message}</div></div>`;
         output.className = 'result-output error';
     }
 }
@@ -264,87 +350,91 @@ function checkAnswer(inputId, correctAnswer) {
     }
 }
 
-// Initialize predefined examples with calculations
+// Initialize predefined examples with updated 7-day data
 function initializeExamples() {
     console.log('Initializing examples...');
     
-    // Water consumption example (Mean)
-    const waterConsumption = [180, 220, 195, 210, 185, 200, 175, 225, 190, 205];
-    const waterMean = waterConsumption.reduce((acc, num) => acc + num, 0) / waterConsumption.length;
-    const meanResult = document.getElementById('mean-result');
-    if (meanResult) {
-        meanResult.textContent = waterMean.toFixed(1);
-    }
-    
-    // Income example (Median) - 20 values
-    const incomes = [15, 18, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 48, 52, 55, 65, 75, 85, 120, 180];
-    // For 20 values, median is average of 10th and 11th values (0-indexed: 9 and 10)
-    const incomeMedian = (incomes[9] + incomes[10]) / 2; // 40 and 42
-    const incomeMedianResult = document.getElementById('income-median-result');
-    if (incomeMedianResult) {
-        incomeMedianResult.textContent = '₹' + incomeMedian + 'k';
-    }
-    
-    // PDS waiting times example (Median) - 20 values
-    const waitingTimes = [5, 8, 12, 15, 18, 20, 22, 25, 28, 30, 32, 35, 38, 42, 45, 48, 55, 65, 90, 120];
-    // For 20 values, median is average of 10th and 11th values (0-indexed: 9 and 10)
-    const pdsMedian = (waitingTimes[9] + waitingTimes[10]) / 2; // 30 and 32
-    const pdsMedianResult = document.getElementById('pds-median-result');
-    if (pdsMedianResult) {
-        pdsMedianResult.textContent = pdsMedian + ' minutes';
-    }
-    
-    // Transport mode example (Mode)
-    const modeResult = document.getElementById('mode-result');
-    if (modeResult) {
-        modeResult.textContent = 'Bus';
-    }
-    
-    // Air quality example (Standard Deviation)
-    const airQuality = [45, 65, 85, 95, 120, 150, 180, 200, 250, 300];
-    const aqMean = airQuality.reduce((acc, num) => acc + num, 0) / airQuality.length;
-    const aqVariance = airQuality.reduce((acc, num) => acc + Math.pow(num - aqMean, 2), 0) / airQuality.length;
-    const aqStdDev = Math.sqrt(aqVariance);
-    const stddevMean = document.getElementById('stddev-mean');
-    const stddevResult = document.getElementById('stddev-result');
-    if (stddevMean) {
-        stddevMean.textContent = aqMean.toFixed(0);
-    }
-    if (stddevResult) {
-        stddevResult.textContent = aqStdDev.toFixed(1);
-    }
-    
-    // Exam scores example (Quantiles)
-    const examScores = [45, 52, 58, 63, 67, 72, 75, 78, 82, 85, 87, 90, 92, 94, 96];
-    
-    function getQuantile(data, q) {
-        const pos = (data.length - 1) * q;
-        const base = Math.floor(pos);
-        const rest = pos - base;
-        
-        if (base + 1 < data.length) {
-            return data[base] + rest * (data[base + 1] - data[base]);
-        } else {
-            return data[base];
+    try {
+        // Water consumption example (Mean) - 7 days
+        const waterConsumption = [185, 210, 195, 200, 180, 240, 220];
+        const waterMean = waterConsumption.reduce((acc, num) => acc + num, 0) / waterConsumption.length;
+        const meanResult = document.getElementById('mean-result');
+        if (meanResult) {
+            meanResult.textContent = waterMean.toFixed(1);
         }
+        
+        // Income example (Median) - 20 values
+        const incomes = [15, 18, 22, 25, 28, 30, 32, 35, 38, 40, 42, 45, 48, 52, 55, 65, 75, 85, 120, 180];
+        // For 20 values, median is average of 10th and 11th values (0-indexed: 9 and 10)
+        const incomeMedian = (incomes[9] + incomes[10]) / 2; // 40 and 42
+        const incomeMedianResult = document.getElementById('income-median-result');
+        if (incomeMedianResult) {
+            incomeMedianResult.textContent = '₹' + incomeMedian + 'k';
+        }
+        
+        // PDS waiting times example (Median) - 20 values
+        const waitingTimes = [5, 8, 12, 15, 18, 20, 22, 25, 28, 30, 32, 35, 38, 42, 45, 48, 55, 65, 90, 120];
+        // For 20 values, median is average of 10th and 11th values (0-indexed: 9 and 10)
+        const pdsMedian = (waitingTimes[9] + waitingTimes[10]) / 2; // 30 and 32
+        const pdsMedianResult = document.getElementById('pds-median-result');
+        if (pdsMedianResult) {
+            pdsMedianResult.textContent = pdsMedian + ' minutes';
+        }
+        
+        // Transport mode example (Mode)
+        const modeResult = document.getElementById('mode-result');
+        if (modeResult) {
+            modeResult.textContent = 'Bus';
+        }
+        
+        // Air quality example (Standard Deviation) - 7 days
+        const airQuality = [65, 85, 120, 95, 110, 75, 80];
+        const aqMean = airQuality.reduce((acc, num) => acc + num, 0) / airQuality.length;
+        const aqVariance = airQuality.reduce((acc, num) => acc + Math.pow(num - aqMean, 2), 0) / airQuality.length;
+        const aqStdDev = Math.sqrt(aqVariance);
+        const stddevMean = document.getElementById('stddev-mean');
+        const stddevResult = document.getElementById('stddev-result');
+        if (stddevMean) {
+            stddevMean.textContent = aqMean.toFixed(1);
+        }
+        if (stddevResult) {
+            stddevResult.textContent = aqStdDev.toFixed(1);
+        }
+        
+        // Exam scores example (Quantiles)
+        const examScores = [45, 52, 58, 63, 67, 72, 75, 78, 82, 85, 87, 90, 92, 94, 96];
+        
+        function getQuantile(data, q) {
+            const pos = (data.length - 1) * q;
+            const base = Math.floor(pos);
+            const rest = pos - base;
+            
+            if (base + 1 < data.length) {
+                return data[base] + rest * (data[base + 1] - data[base]);
+            } else {
+                return data[base];
+            }
+        }
+        
+        const q1 = getQuantile(examScores, 0.25);
+        const q2 = getQuantile(examScores, 0.5);
+        const q3 = getQuantile(examScores, 0.75);
+        
+        const q1Result = document.getElementById('q1-result');
+        const q2Result = document.getElementById('q2-result');
+        const q3Result = document.getElementById('q3-result');
+        
+        if (q1Result) q1Result.textContent = q1.toFixed(0) + ' marks';
+        if (q2Result) q2Result.textContent = q2.toFixed(0) + ' marks';
+        if (q3Result) q3Result.textContent = q3.toFixed(0) + ' marks';
+        
+        console.log('Examples initialized successfully');
+    } catch (error) {
+        console.error('Error initializing examples:', error);
     }
-    
-    const q1 = getQuantile(examScores, 0.25);
-    const q2 = getQuantile(examScores, 0.5);
-    const q3 = getQuantile(examScores, 0.75);
-    
-    const q1Result = document.getElementById('q1-result');
-    const q2Result = document.getElementById('q2-result');
-    const q3Result = document.getElementById('q3-result');
-    
-    if (q1Result) q1Result.textContent = q1.toFixed(0) + ' marks';
-    if (q2Result) q2Result.textContent = q2.toFixed(0) + ' marks';
-    if (q3Result) q3Result.textContent = q3.toFixed(0) + ' marks';
-    
-    console.log('Examples initialized successfully');
 }
 
-// Smooth scrolling navigation
+// Smooth scrolling navigation - Fixed to work properly
 function setupNavigation() {
     console.log('Setting up navigation...');
     
@@ -352,8 +442,6 @@ function setupNavigation() {
     console.log(`Found ${navLinks.length} navigation links`);
     
     navLinks.forEach((link, index) => {
-        console.log(`Setting up navigation for link ${index}: ${link.href}`);
-        
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -397,6 +485,7 @@ function setupKeyboardSupport() {
         if (inputElement) {
             inputElement.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     calculator();
                 }
             });
@@ -420,6 +509,7 @@ function setupKeyboardSupport() {
         if (inputElement) {
             inputElement.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     checkAnswer(id, answer);
                 }
             });
@@ -480,14 +570,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add a small delay to ensure all elements are rendered
     setTimeout(() => {
-        // Initialize all components
-        initializeExamples();
-        setupNavigation();
-        setupKeyboardSupport();
-        setupInputClearing();
-        setupFeedbackClearing();
-        
-        console.log('Statistics tutorial initialized successfully');
+        try {
+            // Initialize all components
+            initializeExamples();
+            setupNavigation();
+            setupKeyboardSupport();
+            setupInputClearing();
+            setupFeedbackClearing();
+            
+            console.log('Statistics tutorial initialized successfully');
+        } catch (error) {
+            console.error('Error during initialization:', error);
+        }
     }, 100);
 });
 
