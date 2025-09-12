@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Made Simple: A Comprehensive Tutorial</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <h1 class="header__title">📊 Statistics Made Simple</h1>
+                <p class="header__subtitle">Master Statistical Concepts Through Real-World Examples</p>
+                <nav class="header__nav">
+                    <a href="#introduction" class="nav-link">Introduction</a>
+                    <a href="#mean" class="nav-link">Mean</a>
+                    <a href="#median" class="nav-link">Median</a>
+                    <a href="#mode" class="nav-link">Mode</a>
+                    <a href="#std-dev" class="nav-link">Standard Deviation</a>
+                    <a href="#quantiles" class="nav-link">Quantiles</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="section">
+        <div class="container">
+            <div class="intro-content">
+                <h2>Learn Statistics Through Practical Examples</h2>
+                <p>This tutorial will teach you essential statistical concepts through real-world examples and interactive exercises. You'll learn how to calculate, interpret, and apply mean, median, mode, standard deviation, and quantiles to make data-driven decisions in everyday situations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mean Section -->
+    <section id="mean" class="section">
+        <div class="container">
+            <h2>Mean (Average)</h2>
+            <div class="concept-explanation">
+                <h3>What is Mean?</h3>
+                <p>The average value - add all numbers and divide by count. Used for planning and resource allocation - tells you what to expect on a typical day.</p>
+                <p><strong>When to use:</strong> When you need to plan resources or set expectations based on typical values.</p>
+            </div>
+
+            <div class="example-section">
+                <h3>Example: Daily Water Consumption Planning</h3>
+                <p>Daily water consumption (liters) per household in a residential area over 10 days:</p>
+                <div class="data-display">
+                    <span class="data-label">180L</span>
+                    <span class="data-label">220L</span>
+                    <span class="data-label">195L</span>
+                    <span class="data-label">210L</span>
+                    <span class="data-label">185L</span>
+                    <span class="data-label">200L</span>
+                    <span class="data-label">175L</span>
+                    <span class="data-label">225L</span>
+                    <span class="data-label">190L</span>
+                    <span class="data-label">205L</span>
+                </div>
+                <div class="calculation">
+                    <p><strong>Average consumption:</strong> <span id="mean-result">198.5</span> liters per day</p>
+                    <p><em>Municipal planners use this average to determine pipeline capacity and daily supply requirements for the entire area.</em></p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h3>Try It Yourself</h3>
+                <div class="calculator">
+                    <label class="form-label">Enter numbers (comma-separated):</label>
+                    <input type="text" id="mean-input" class="form-control" placeholder="e.g., 10, 20, 30, 40">
+                    <button onclick="calculateMean()" class="btn btn--primary">Calculate Mean</button>
+                    <div id="mean-output" class="result-output"></div>
+                </div>
+                
+                <!-- Practice Exercise integrated -->
+                <div class="exercise-card">
+                    <h4>Practice: Average Test Scores</h4>
+                    <p>Calculate the average test score: 85, 92, 78, 88, 95, 82, 90</p>
+                    <input type="number" id="test-scores-mean" class="form-control" placeholder="Enter your answer">
+                    <button onclick="checkAnswer('test-scores-mean', 87.14)" class="btn btn--secondary">Check Answer</button>
+                    <span id="test-scores-mean-feedback" class="feedback"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Median Section -->
+    <section id="median" class="section">
+        <div class="container">
+            <h2>Median (Middle Value)</h2>
+            <div class="concept-explanation">
+                <h3>What is Median?</h3>
+                <p>The middle value when numbers are arranged from smallest to largest. Shows what's truly typical when there are extreme values.</p>
+                <p><strong>When to use:</strong> When extreme values would make average misleading - like income, property prices, or waiting times.</p>
+            </div>
+
+            <div class="example-section">
+                <h3>Example 1: Monthly Household Income Analysis</h3>
+                <p>Monthly household income (in thousands ₹) across 20 urban families:</p>
+                <div class="data-display">
+                    <span class="data-label">₹15k</span>
+                    <span class="data-label">₹18k</span>
+                    <span class="data-label">₹22k</span>
+                    <span class="data-label">₹25k</span>
+                    <span class="data-label">₹28k</span>
+                    <span class="data-label">₹30k</span>
+                    <span class="data-label">₹32k</span>
+                    <span class="data-label">₹35k</span>
+                    <span class="data-label">₹38k</span>
+                    <span class="data-label">₹40k</span>
+                    <span class="data-label">₹42k</span>
+                    <span class="data-label">₹45k</span>
+                    <span class="data-label">₹48k</span>
+                    <span class="data-label">₹52k</span>
+                    <span class="data-label">₹55k</span>
+                    <span class="data-label">₹65k</span>
+                    <span class="data-label">₹75k</span>
+                    <span class="data-label">₹85k</span>
+                    <span class="data-label">₹120k</span>
+                    <span class="data-label">₹180k</span>
+                </div>
+                <div class="calculation">
+                    <p><strong>Median income:</strong> <span id="income-median-result">₹41k</span> (middle value between 10th and 11th positions)</p>
+                    <p><em>This shows what a typical middle-class family actually earns, not skewed by very high earners.</em></p>
+                </div>
+
+                <h3>Example 2: PDS Shop Waiting Times</h3>
+                <p>Waiting times (in minutes) at PDS shop during peak hours across 20 visits:</p>
+                <div class="data-display">
+                    <span class="data-label">5min</span>
+                    <span class="data-label">8min</span>
+                    <span class="data-label">12min</span>
+                    <span class="data-label">15min</span>
+                    <span class="data-label">18min</span>
+                    <span class="data-label">20min</span>
+                    <span class="data-label">22min</span>
+                    <span class="data-label">25min</span>
+                    <span class="data-label">28min</span>
+                    <span class="data-label">30min</span>
+                    <span class="data-label">32min</span>
+                    <span class="data-label">35min</span>
+                    <span class="data-label">38min</span>
+                    <span class="data-label">42min</span>
+                    <span class="data-label">45min</span>
+                    <span class="data-label">48min</span>
+                    <span class="data-label">55min</span>
+                    <span class="data-label">65min</span>
+                    <span class="data-label">90min</span>
+                    <span class="data-label">120min</span>
+                </div>
+                <div class="calculation">
+                    <p><strong>Median waiting time:</strong> <span id="pds-median-result">31 minutes</span></p>
+                    <p><em>Gives realistic expectation for service improvement planning, not skewed by extremely long waits.</em></p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h3>Try It Yourself</h3>
+                <div class="calculator">
+                    <label class="form-label">Enter numbers (comma-separated):</label>
+                    <input type="text" id="median-input" class="form-control" placeholder="e.g., 10, 25, 15, 30, 20">
+                    <button onclick="calculateMedian()" class="btn btn--primary">Calculate Median</button>
+                    <div id="median-output" class="result-output"></div>
+                </div>
+                
+                <!-- Practice Exercise integrated -->
+                <div class="exercise-card">
+                    <h4>Practice: Property Prices</h4>
+                    <p>Find the median property price (in lakhs): 45, 50, 65, 42, 38, 55, 48, 95, 35, 40</p>
+                    <input type="number" id="property-median" class="form-control" placeholder="Enter your answer">
+                    <button onclick="checkAnswer('property-median', 46.5)" class="btn btn--secondary">Check Answer</button>
+                    <span id="property-median-feedback" class="feedback"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mode Section -->
+    <section id="mode" class="section">
+        <div class="container">
+            <h2>Mode (Most Frequent)</h2>
+            <div class="concept-explanation">
+                <h3>What is Mode?</h3>
+                <p>The value that appears most frequently. Shows the most popular choice or most common situation.</p>
+                <p><strong>When to use:</strong> When you want to know what's most typical or popular - for inventory, service planning.</p>
+            </div>
+
+            <div class="example-section">
+                <h3>Example: Preferred Transport Mode</h3>
+                <p>Transport preferences among office commuters:</p>
+                <div class="data-display">
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label">Auto</span>
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label">Metro</span>
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label">Auto</span>
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label">Bike</span>
+                    <span class="data-label highlighted">Bus</span>
+                    <span class="data-label">Metro</span>
+                    <span class="data-label highlighted">Bus</span>
+                </div>
+                <div class="calculation">
+                    <p><strong>Mode:</strong> <span id="mode-result">Bus</span> (appears 7 times - most popular transport mode)</p>
+                    <p><em>Transport planners use this to prioritize investment - most popular mode needs maximum capacity.</em></p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h3>Try It Yourself</h3>
+                <div class="calculator">
+                    <label class="form-label">Enter numbers (comma-separated):</label>
+                    <input type="text" id="mode-input" class="form-control" placeholder="e.g., 1, 2, 2, 3, 2, 4">
+                    <button onclick="calculateMode()" class="btn btn--primary">Calculate Mode</button>
+                    <div id="mode-output" class="result-output"></div>
+                </div>
+
+                <!-- Practice Exercise integrated -->
+                <div class="exercise-card">
+                    <h4>Practice: Class Sizes</h4>
+                    <p>Find the most common class size: 30, 32, 30, 35, 30, 28, 32, 30, 34</p>
+                    <input type="number" id="class-size-mode" class="form-control" placeholder="Enter your answer">
+                    <button onclick="checkAnswer('class-size-mode', 30)" class="btn btn--secondary">Check Answer</button>
+                    <span id="class-size-mode-feedback" class="feedback"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standard Deviation Section -->
+    <section id="std-dev" class="section">
+        <div class="container">
+            <h2>Standard Deviation (Spread)</h2>
+            <div class="concept-explanation">
+                <h3>What is Standard Deviation?</h3>
+                <p>Measures how spread out or consistent your data is. Shows predictability and risk - low means consistent, high means variable/unpredictable.</p>
+                <p><strong>When to use:</strong> When consistency matters - quality control, risk assessment, resource planning.</p>
+            </div>
+
+            <div class="example-section">
+                <h3>Example: Air Quality Risk Assessment</h3>
+                <p>Daily Air Quality Index readings over 10 days in a city:</p>
+                <div class="data-display">
+                    <span class="data-label">45 AQI</span>
+                    <span class="data-label">65 AQI</span>
+                    <span class="data-label">85 AQI</span>
+                    <span class="data-label">95 AQI</span>
+                    <span class="data-label">120 AQI</span>
+                    <span class="data-label">150 AQI</span>
+                    <span class="data-label">180 AQI</span>
+                    <span class="data-label">200 AQI</span>
+                    <span class="data-label">250 AQI</span>
+                    <span class="data-label">300 AQI</span>
+                </div>
+                <div class="calculation">
+                    <p><strong>Mean AQI:</strong> <span id="stddev-mean">149</span></p>
+                    <p><strong>Standard Deviation:</strong> <span id="stddev-result">83.4</span></p>
+                    <p><strong>Why this matters:</strong> High standard deviation shows highly variable air quality, meaning unpredictable health risks requiring flexible response plans rather than fixed policies.</p>
+                    <p><em>Low SD = consistent air quality (easier to plan), High SD = highly variable (needs adaptive strategies)</em></p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h3>Try It Yourself</h3>
+                <div class="calculator">
+                    <label class="form-label">Enter numbers (comma-separated):</label>
+                    <input type="text" id="stddev-input" class="form-control" placeholder="e.g., 10, 12, 14, 16, 18">
+                    <button onclick="calculateStdDev()" class="btn btn--primary">Calculate Standard Deviation</button>
+                    <div id="stddev-output" class="result-output"></div>
+                </div>
+
+                <!-- Practice Exercise integrated -->
+                <div class="exercise-card">
+                    <h4>Practice: Temperature Variation</h4>
+                    <p>Calculate standard deviation of daily temperatures: 25, 27, 26, 28, 24, 29, 25</p>
+                    <input type="number" id="temp-stddev" class="form-control" placeholder="Enter your answer (rounded to 1 decimal)">
+                    <button onclick="checkAnswer('temp-stddev', 1.7)" class="btn btn--secondary">Check Answer</button>
+                    <span id="temp-stddev-feedback" class="feedback"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quantiles Section -->
+    <section id="quantiles" class="section">
+        <div class="container">
+            <h2>Quantiles (Quartiles & Percentiles)</h2>
+            <div class="concept-explanation">
+                <h3>What are Quantiles?</h3>
+                <p>Values that divide data into equal groups. Help understand distribution and set benchmarks - like grade boundaries or income brackets.</p>
+                <p><strong>When to use:</strong> When you need to compare performance or set different service levels for different groups.</p>
+            </div>
+
+            <div class="example-section">
+                <h3>Example: Educational Assessment</h3>
+                <p>Student exam scores in a competitive test:</p>
+                <div class="data-display">
+                    <span class="data-label">45</span>
+                    <span class="data-label">52</span>
+                    <span class="data-label">58</span>
+                    <span class="data-label">63</span>
+                    <span class="data-label">67</span>
+                    <span class="data-label">72</span>
+                    <span class="data-label">75</span>
+                    <span class="data-label">78</span>
+                    <span class="data-label">82</span>
+                    <span class="data-label">85</span>
+                    <span class="data-label">87</span>
+                    <span class="data-label">90</span>
+                    <span class="data-label">92</span>
+                    <span class="data-label">94</span>
+                    <span class="data-label">96</span>
+                </div>
+                <div class="quartiles-display">
+                    <p><strong>Quartiles for Grade Boundaries:</strong></p>
+                    <div class="quartile-result">
+                        <span>Q1 (25%): <span id="q1-result">63 marks</span></span>
+                        <span>Q2 (50% - Median): <span id="q2-result">78 marks</span></span>
+                        <span>Q3 (75%): <span id="q3-result">87 marks</span></span>
+                    </div>
+                    <p><em>Educational authorities use quartiles to identify performance levels and set cut-off marks for different grade categories.</em></p>
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <h3>Try It Yourself</h3>
+                <div class="calculator">
+                    <label class="form-label">Enter numbers (comma-separated):</label>
+                    <input type="text" id="quantiles-input" class="form-control" placeholder="e.g., 10, 20, 30, 40, 50, 60, 70, 80">
+                    <button onclick="calculateQuantiles()" class="btn btn--primary">Calculate Quartiles</button>
+                    <div id="quantiles-output" class="result-output"></div>
+                </div>
+
+                <!-- Practice Exercise integrated -->
+                <div class="exercise-card">
+                    <h4>Practice: Salary Distribution</h4>
+                    <p>Find Q2 (median) of salaries: 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000</p>
+                    <input type="number" id="salary-q2" class="form-control" placeholder="Enter your answer">
+                    <button onclick="checkAnswer('salary-q2', 42500)" class="btn btn--secondary">Check Answer</button>
+                    <span id="salary-q2-feedback" class="feedback"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>📚 Statistics Made Simple - Learn through Real-World Examples</p>
+            <p>Understanding data helps make better decisions in planning, policy, and everyday life</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
