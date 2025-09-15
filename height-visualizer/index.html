@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Height Data Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Height Data Visualizer</h1>
+            <p class="header__subtitle">Paste your height data and generate statistical visualizations</p>
+        </header>
+
+        <main class="main">
+            <section class="data-input">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Data Input</h2>
+                        <div class="form-group">
+                            <label for="heightData" class="form-label">
+                                Height Data (one per line or comma-separated):
+                            </label>
+                            <textarea 
+                                id="heightData" 
+                                class="form-control data-textarea" 
+                                placeholder="170.2&#10;165.8&#10;178.5&#10;172.1&#10;169.7&#10;175.3&#10;...&#10;&#10;Or comma-separated:&#10;170.2, 165.8, 178.5, 172.1, 169.7, 175.3, ..."
+                                rows="8"></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button id="generateBtn" class="btn btn--primary">Generate Visualization</button>
+                            <button id="clearBtn" class="btn btn--secondary">Clear Data</button>
+                            <button id="sampleBtn" class="btn btn--outline">Load Sample Data</button>
+                        </div>
+                        <div id="errorMessage" class="error-message hidden"></div>
+                        <div id="successMessage" class="success-message hidden"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="instructions">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Instructions</h3>
+                        <ol class="instructions-list">
+                            <li>Paste your height data in the textarea above (one height per line or comma-separated)</li>
+                            <li>Click "Generate Visualization" to create the chart</li>
+                            <li>View the bar chart with statistical overlays (mean, median, standard deviation)</li>
+                            <li>Use "Load Sample Data" to try with example data</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="visualization hidden" id="visualizationSection">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Height Distribution Chart</h2>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="heightChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="statistics hidden" id="statisticsSection">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Statistical Summary</h3>
+                        <div class="statistics-grid">
+                            <div class="stat-item">
+                                <span class="stat-label">Count:</span>
+                                <span id="statCount" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Mean:</span>
+                                <span id="statMean" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Median:</span>
+                                <span id="statMedian" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Standard Deviation:</span>
+                                <span id="statStdDev" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Min Height:</span>
+                                <span id="statMin" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Max Height:</span>
+                                <span id="statMax" class="stat-value">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="legend">
+                            <h4>Chart Legend</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: #FF4444; border-style: dashed;"></div>
+                                    <span>Mean (Average height)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: #44AA44; border-style: dashed;"></div>
+                                    <span>Median (Middle value)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: rgba(68, 136, 255, 0.3);"></div>
+                                    <span>Standard Deviation Band (±1 std dev from mean)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Load Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.umd.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
